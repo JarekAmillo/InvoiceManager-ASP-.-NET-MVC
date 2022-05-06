@@ -24,7 +24,7 @@ namespace InvoiceManager_ASP.NET_MVC
 
             bundles.Add(new Bundle("~/bundles/bootstrap").Include(
                                 "~/Scripts/bootstrap.js",
-                                "~/Scripts/bootstrap.datepicker.js"));
+                                "~/Scripts/bootstrap-datepicker.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

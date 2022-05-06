@@ -1,7 +1,5 @@
 ﻿@model IEnumerable<InvoiceManager_ASP.NET_MVC.Models.Domains.Invoice>
 
-
-
 @{
     ViewBag.Title = "Faktury";
 }
@@ -33,9 +31,11 @@
         {
         <tr>
             <td>
-                <a href="@Url.Action("Invoice","Home", new { id = invoice.Id})">@invoice.Title</a>
+                <a 
+                   class="font-weight-bold"
+                   href="@Url.Action("Invoice","Home", new { id = invoice.Id})">@invoice.Title</a>
                 
-                @invoice.Title
+                @*@invoice.Title*@
             </td>
 
             <td>@invoice.Client.Name</td>

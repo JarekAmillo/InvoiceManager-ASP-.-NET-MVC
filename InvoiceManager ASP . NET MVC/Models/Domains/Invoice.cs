@@ -23,7 +23,7 @@ namespace InvoiceManager_ASP.NET_MVC.Models.Domains
         public string Title  { get; set; }
 
 
-        [Display(Name = "wartość")]
+        [Display(Name = "Wartość")]
         public decimal Value { get; set; }
 
 
