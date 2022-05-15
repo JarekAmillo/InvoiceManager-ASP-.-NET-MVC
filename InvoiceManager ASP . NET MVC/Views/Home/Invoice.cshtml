@@ -9,7 +9,8 @@
 @if (Model.Invoice.Id != 0)
 {
     <button class="btn btn-primary mb-3"
-            onclick='window.location.href="@Url.Action("InvoicePosition","Home" ,      new { invoiceId = Model.Invoice.Id})"'>
+            onclick='window.location.href="@Url.Action("InvoicePosition","Home" ,
+              new { invoiceId = Model.Invoice.Id})"'>
         Dodaj pozycję
     </button>
     <button class="btn btn-secondary mb-3"
@@ -30,58 +31,83 @@
                 </p>
             }
 
-                @Html.HiddenFor(x => x.Invoice.Id)
-                @Html.HiddenFor(x => x.Invoice.UserId)
-                @Html.HiddenFor(x => x.Invoice.CreatedDate)
+            @Html.HiddenFor(x => x.Invoice.Id)
+            @* @Html.HiddenFor(x => x.Invoice.UserId)
+                @Html.HiddenFor(x => x.Invoice.CreatedDate)*@
 
-                <div class="form-group">
+            <div class="form-group">
+                @Html.LabelFor(x => x.Invoice.Title)
+                @Html.TextBoxFor(x => x.Invoice.Title,
+                new { @class = "form-control", autofocus = "autofocus" })
+                @Html.ValidationMessageFor(x => x.Invoice.Title)
+            </div>
+
+            <div class="form-group mt-2">
+                @Html.LabelFor(x => x.Invoice.ClientId)
+                @Html.DropDownListFor(x => x.Invoice.ClientId,
+                new SelectList(Model.Clients, "Id", "Name"),
+                "--Wybierz klienta--", new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Invoice.ClientId)
+            </div>
+
+
+
+            @*@Html.HiddenFor(x => x.Invoice.Id)
+                @* @Html.HiddenFor(x => x.Invoice.UserId)
+                @Html.HiddenFor(x => x.Invoice.CreatedDate)*@
+
+            @*<div class="form-group">
                     @Html.LabelFor(x => x.Invoice.Title)
-                    @Html.TextBoxFor(x => x.Invoice.Title, 
+                    @Html.TextBoxFor(x => x.Invoice.Title,
                     new { @class = "form-control", autofocus = "autofocus" })
                 </div>
 
                 <div class="form-group mt-2">
                     @Html.LabelFor(x => x.Invoice.ClientId)
-                    @Html.DropDownListFor(x => x.Invoice.ClientId, 
-                    new SelectList(Model.Clients, "Id", "Name"), 
+                    @Html.DropDownListFor(x => x.Invoice.ClientId,
+                    new SelectList(Model.Clients, "Id", "Name"),
                     "--Wybierz klienta--", new { @class = "form-control" })
-                </div>
+                </div>*@
 
-                if (Model.Invoice.Id != 0)
-                {
-                    <div class="form-group mt-2">
-                        @Html.LabelFor(x => x.Invoice.Value)
-                        @Html.TextBoxFor(x => x.Invoice.Value, 
-                        new { @class = "form-control", @readonly = "readonly" })
-                    </div>
-                }
-
+            if (Model.Invoice.Id != 0)
+            {
                 <div class="form-group mt-2">
-                    @Html.LabelFor(x => x.Invoice.MethodOfPaymentId)
-                    @Html.DropDownListFor(x => x.Invoice.MethodOfPaymentId, new SelectList(Model.MethodOfPayments, "Id", "Name"), "--Wybierz metodę płatności--", new { @class = "form-control" })
+                    @Html.LabelFor(x => x.Invoice.Value)
+                    @Html.TextBoxFor(x => x.Invoice.Value,
+                    new { @class = "form-control", @readonly = "readonly" })
                 </div>
-
-                <div class="form-group mt-2">
-                    @Html.LabelFor(x => x.Invoice.PaymentDate)
-                    @Html.TextBoxFor(x => x.Invoice.PaymentDate,
-                    "{0:dd-MM-yyyy}",
-                    new 
-                        { 
-                            @class = "form-control", 
-                            @id = "PaymentDate", 
-                            //autocomplete = "off"
-                        })
-                </div>
-
-                <div class="form-group mt-3">
-                    @Html.LabelFor(x => x.Invoice.Comments)
-                    @Html.TextAreaFor(x => x.Invoice.Comments, new { @class = "form-control" })
-                </div>
-
-                <button class="btn btn-primary btn-lg mb-5 mt-3" type="submit">
-                    Zapisz
-                </button>
             }
+
+            <div class="form-group mt-2">
+                @Html.LabelFor(x => x.Invoice.MethodOfPaymentId)
+                @Html.DropDownListFor(x => x.Invoice.MethodOfPaymentId, new SelectList(Model.MethodOfPayments, "Id", "Name"), "--Wybierz metodę płatności--", new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Invoice.MethodOfPaymentId)
+            </div>
+
+            <div class="form-group mt-2">
+                @Html.LabelFor(x => x.Invoice.PaymentDate)
+                @Html.TextBoxFor(x => x.Invoice.PaymentDate,
+                "{0:dd-MM-yyyy}",
+                new
+                    {
+                        @class = "form-control",
+                        @id = "PaymentDate",
+                        //autocomplete = "off"
+                    })
+                @Html.ValidationMessageFor(x => x.Invoice.PaymentDate)
+            </div>
+
+            <div class="form-group mt-3">
+                @Html.LabelFor(x => x.Invoice.Comments)
+                @Html.TextAreaFor(x => x.Invoice.Comments, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Invoice.Comments)
+            </div>
+
+            <button class="btn btn-primary btn-lg mb-5 mt-3" type="submit">
+                Zapisz
+            </button>
+
+        }
     </div>
 
     <div class="col-5 offset-lg-1">
@@ -90,9 +116,6 @@
             @Html.Partial("_InvoicePosition", Model.Invoice.InvoicePositions)
         }
 
-
-
-
     </div>
 </div>
 
@@ -100,34 +123,80 @@
 @section Scripts
 {
     <script type="text/javascript">
-        function generatePdf()
+
+    function generatePdf()
         {
 
         }
 
-        function deleteInvoicePosition()
+    function deleteInvoicePosition(id, invoiceId, btn) {
         {
-            if (!confirm("Czy na pewno chcesz usunąć pozycję?")) {
-                return;
+        if (!confirm("Czy na pewno chcesz usunąć pozycję?"))
+        {
+            return;
+
+
+            $.ajax({
+                type: 'POST'
+                url: "@Url.Action("DeletePosition", "Home")",
+                data: {
+                    id: id,
+                    invoiceId: invoiceId
+                },
+                success: function (data)
+                {
+                    if (data.success) {
+                        var row = btn.parentNode.parentNode;
+                        row = parentNode.removeChild(row);
+
+                        $('#Invoice_Value').val(data.InvoiceValue.ToFixed(2).replace(",","."));
+                    }
+                    else
+                    {
+                        alert(data.Message);
+                    }
+                },
+                error: function (data) {
+                    alert(data.Message);
+                },
+                dataType: 'json'
+                        });
             }
+        //}
+        //}
+
+
+
+    $(document).ready(function ()
+    {
+
+        $.validator.methods.number = function (value, element) {
+            return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
         }
 
+        $.validator.methods.date = function (value, element) {
+            var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+            if (isChrome) {
+                var d = new Date();
+                return this.optional(element) || !/Invalid|NaN/.test(new Date(d.toLocaleDateString(value)));
+            } else {
+                return this.optional(element) || !/Invalid|NaN/.test(new Date(value));
+            }
+        };
 
 
-        $(document).ready(function ()
-        {
-            $('#PaymentDate').datepicker({
-                format: "dd-mm-yyyy",
-                language: "pl",
-                multidate: false,
-                autoclose: true,
-                todayHighlight: true,
-                forceParse: false,
-                zIndexOffset: 14,
-                todayBtn: true,
-                dayRange: "+10"
-            }).datepicker("setDate", "+14");
-        });
+        $('#PaymentDate').datepicker({
+            format: "dd-mm-yyyy",
+            language: "pl",
+            multidate: false,
+            autoclose: true,
+            todayHighlight: true,
+            forceParse: false,
+            zIndexOffset: 14,
+            todayBtn: true,
+            dayRange: "+10"
+        }).datepicker("setDate", "+14");
+    });
 
 
     </script>

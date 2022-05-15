@@ -10,7 +10,7 @@
                 <th scope="col">  Produkt  </th>
                 <th scope="col">  Ilość  </th>
                 <th scope="col">  Wartość  </th>
-                <th scope="col">  Lp  </th>
+                <th scope="col"></th>
             </tr>
 
         </thead>
@@ -19,9 +19,10 @@
             {
                 <tr>
                     <td>
-                        <a class="font-weight-bold"
+                        <a class="fw-bold text-decoration-none"
                            href="@Url.Action("InvoicePosition","Home" ,
-                        new {
+                        new 
+                        {
                             invoiceId = position.InvoiceId,
                             invoicePositionId = position.Id
                         })">
@@ -33,7 +34,7 @@
                     <td>@position.Value zł</td>
                     <td>
                         <button class="btn btn-danger btn-sm"
-                                onclick="deleteInvoicePosition()">
+                                onclick="deleteInvoicePosition('@position.Id', @position.InvoiceId, this)">
                             Usuń
                         </button>
                     </td>
