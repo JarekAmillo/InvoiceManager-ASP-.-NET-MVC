@@ -32,8 +32,8 @@
             }
 
             @Html.HiddenFor(x => x.Invoice.Id)
-            @* @Html.HiddenFor(x => x.Invoice.UserId)
-                @Html.HiddenFor(x => x.Invoice.CreatedDate)*@
+            @Html.HiddenFor(x => x.Invoice.UserId)
+            @*  @Html.HiddenFor(x => x.Invoice.CreatedDate)*@
 
             <div class="form-group">
                 @Html.LabelFor(x => x.Invoice.Title)
@@ -53,21 +53,21 @@
 
 
             @*@Html.HiddenFor(x => x.Invoice.Id)
-                @* @Html.HiddenFor(x => x.Invoice.UserId)
-                @Html.HiddenFor(x => x.Invoice.CreatedDate)*@
+            @* @Html.HiddenFor(x => x.Invoice.UserId)
+            @Html.HiddenFor(x => x.Invoice.CreatedDate)*@
 
             @*<div class="form-group">
-                    @Html.LabelFor(x => x.Invoice.Title)
-                    @Html.TextBoxFor(x => x.Invoice.Title,
-                    new { @class = "form-control", autofocus = "autofocus" })
-                </div>
+                @Html.LabelFor(x => x.Invoice.Title)
+                @Html.TextBoxFor(x => x.Invoice.Title,
+                new { @class = "form-control", autofocus = "autofocus" })
+            </div>
 
-                <div class="form-group mt-2">
-                    @Html.LabelFor(x => x.Invoice.ClientId)
-                    @Html.DropDownListFor(x => x.Invoice.ClientId,
-                    new SelectList(Model.Clients, "Id", "Name"),
-                    "--Wybierz klienta--", new { @class = "form-control" })
-                </div>*@
+            <div class="form-group mt-2">
+                @Html.LabelFor(x => x.Invoice.ClientId)
+                @Html.DropDownListFor(x => x.Invoice.ClientId,
+                new SelectList(Model.Clients, "Id", "Name"),
+                "--Wybierz klienta--", new { @class = "form-control" })
+            </div>*@
 
             if (Model.Invoice.Id != 0)
             {
