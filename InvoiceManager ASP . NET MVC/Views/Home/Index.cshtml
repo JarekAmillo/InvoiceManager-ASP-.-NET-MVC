@@ -67,18 +67,21 @@ else
      function deleteInvoice(id, btn)
      {
          if (!confirm("Czy na pewno chcesz usunąć fakturę?"))
+         {
+             return;
+         }
 
              $.ajax({
-                 type: 'POST'
+                 type: 'POST',
                  url: "@Url.Action("Delete", "Home")",
                  data: {
                      id: id
                  },
                  success: function (data)
                  {
-                     if (data.success) {
+                     if (data.succes) {
                          var row = btn.parentNode.parentNode;
-                         row = parentNode.removeChild(row);
+                         row.parentNode.removeChild(row);
                      }
                      else
                      {
@@ -90,9 +93,7 @@ else
                  },
                  dataType: 'json'
              });
-         {
-             return;
-         }
+
      }
 
     </script>   

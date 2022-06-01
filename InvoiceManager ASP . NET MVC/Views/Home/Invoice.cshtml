@@ -124,46 +124,60 @@
 {
     <script type="text/javascript">
 
-    function generatePdf()
+        function generatePdf()
         {
-
+            $.ajax({
+                    type: 'POST',
+                    url: "@Url.Action("InvoiceToPdf", "Print")",
+                    data: {
+                            id: '@Model.Invoice.Id'
+                    },
+                    success: function (data)
+                    {
+                        window.location = '@Url.Action("DownloadInvoicePdf", "Print")' + '?fileGuid=' + data.FileGuid + '&fileName=' + data.FileName;
+                    },
+                    error: function (data) {
+                        alert(data.Message);
+                    },
+                    dataType: 'json',
+                    cache: false
+            });
         }
 
     function deleteInvoicePosition(id, invoiceId, btn) {
-        {
-        if (!confirm("Czy na pewno chcesz usunąć pozycję?"))
-        {
-            return;
 
-
-            $.ajax({
-                type: 'POST'
-                url: "@Url.Action("DeletePosition", "Home")",
-                data: {
-                    id: id,
-                    invoiceId: invoiceId
-                },
-                success: function (data)
-                {
-                    if (data.success) {
-                        var row = btn.parentNode.parentNode;
-                        row = parentNode.removeChild(row);
-
-                        $('#Invoice_Value').val(data.InvoiceValue.ToFixed(2).replace(",","."));
-                    }
-                    else
-                    {
-                        alert(data.Message);
-                    }
-                },
-                error: function (data) {
-                    alert(data.Message);
-                },
-                dataType: 'json'
-                        });
+        if (!confirm ("Czy na pewno chcesz usunąć pozycję?"))
+            {
+                return;
             }
-        //}
-        //}
+
+        $.ajax({
+            type: 'POST',
+            url: "@Url.Action("DeletePosition", "Home")",
+            data: {
+                id: id,
+                invoiceId: invoiceId
+            },
+            success: function (data)
+            {
+                if (data.Succes) {
+                    var row = btn.parentNode.parentNode;
+/*                    row = parentNode.removeChild(row);*/
+                    row.parentNode.removeChild(row);
+
+                    $('#Invoice_Value').val(data.InvoiceValue.ToFixed(2).replace(".",","));
+                }
+                else
+                {
+                    alert(data.Message);
+                }
+            },
+            error: function (data) {
+                alert(data.Message);
+            },
+            dataType: 'json'
+        });
+    }
 
 
 

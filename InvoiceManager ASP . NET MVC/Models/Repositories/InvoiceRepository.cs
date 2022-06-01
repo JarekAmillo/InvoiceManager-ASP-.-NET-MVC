@@ -108,12 +108,13 @@ namespace InvoiceManager_ASP.NET_MVC.Models.Repositories
                     .Include(x => x.Product)
                     .Include(x => x.Invoice)
                     .Single(x => 
-                              x.Id == invoicePosition.Id &&                              x.Invoice.UserId == userId);
+                         x.Id == invoicePosition.Id &&                                  x.Invoice.UserId == userId);
 
                 positionToUpdate.Lp = invoicePosition.Lp;
                 positionToUpdate.ProductId = invoicePosition.ProductId;
                 positionToUpdate.Quantity = invoicePosition.Quantity;
-                positionToUpdate.Value = positionToUpdate.Value * invoicePosition.Value;
+                positionToUpdate.Value =
+                    positionToUpdate.Product.Value * invoicePosition.Value;
 
                 context.SaveChanges();
             }

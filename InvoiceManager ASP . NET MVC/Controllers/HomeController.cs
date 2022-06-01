@@ -133,14 +133,13 @@ namespace InvoiceManager_ASP.NET_MVC.Controllers
 
             var product = _productRepository.GetProduct(invoicePosition.ProductId);
 
-            invoicePosition.Value = invoicePosition.Quantity * product.Value;
-
             if (!ModelState.IsValid)
             {
                 var vm = PrepareInvoicePositionVm (invoicePosition);
                 return View("InvoicePosition", vm);
             }
 
+            invoicePosition.Value = invoicePosition.Quantity * product.Value;
 
             if (invoicePosition.Id == 0)
             {
@@ -186,15 +185,16 @@ namespace InvoiceManager_ASP.NET_MVC.Controllers
             {
                 var userId = User.Identity.GetUserId();
                 _invoiceRepository.DeletePosition(id, userId);
-                invoiceValue = _invoiceRepository.UpdateInvoiceValue(invoiceId, userId);
+                invoiceValue = _invoiceRepository
+                    .UpdateInvoiceValue(invoiceId, userId);
             }
             catch (Exception exception)
             {
                 //logowanie do pliku
-                return Json(new { succes = false, Message = exception.Message });
+                return Json(new { Success = false, Message = exception.Message });
             }
 
-            return Json(new { succes = true, InvoiceValue = invoiceValue });
+            return Json(new { Success = true, InvoiceValue = invoiceValue });
         }
 
 
