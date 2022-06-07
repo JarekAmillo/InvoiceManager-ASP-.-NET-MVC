@@ -113,8 +113,7 @@ namespace InvoiceManager_ASP.NET_MVC.Models.Repositories
                 positionToUpdate.Lp = invoicePosition.Lp;
                 positionToUpdate.ProductId = invoicePosition.ProductId;
                 positionToUpdate.Quantity = invoicePosition.Quantity;
-                positionToUpdate.Value =
-                    positionToUpdate.Product.Value * invoicePosition.Value;
+                positionToUpdate.Value = invoicePosition.Value;
 
                 context.SaveChanges();
             }
